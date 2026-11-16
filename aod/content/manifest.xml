@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Sol AOD Mechanical Edition
+  First MAML layout prototype. Coordinates are authored on a 1080px-wide
+  canvas and must be checked in Xiaomi's AOD Editor and on-device.
+  Keep this AOD display-only: no buttons, sensors, or intent actions.
+-->
+<Aod version="1" frameRate="30" screenWidth="1080">
+    <!-- AOD system animation lifecycle handshake. No entrance animation yet. -->
+    <ExternalCommands>
+        <Trigger action="init">
+            <ExternCommand command="animationState" strPara="'init'" />
+        </Trigger>
+        <Trigger action="play">
+            <ExternCommand command="animationState" strPara="'finish'" />
+        </Trigger>
+    </ExternalCommands>
+
+    <!-- System notification data. MIUI supplies real icons; preview mode
+         uses the system preview behavior where supported. -->
+    <VariableBinders>
+        <ContentProviderBinder name="aodNotifications"
+            uri="content://aod.notification/notifications"
+            columns="pkg" countName="notificationCount">
+            <Variable name="notificationPackages" type="string[]" column="pkg" />
+        </ContentProviderBinder>
+    </VariableBinders>
+
+    <!-- Mechanical dial: restrained graphite rings and fine champagne markers.
+         The dial is intentionally oversized and cropped at the left edge. -->
+    <Circle x="40" y="1050" r="570" strokeColor="#FF343434" weight="7" />
+    <Circle x="40" y="1050" r="545" strokeColor="#FF202020" weight="3" />
+    <Circle x="40" y="1050" r="500" strokeColor="#FF292929" weight="2" />
+    <Circle x="40" y="1050" r="430" strokeColor="#FF242424" weight="2" />
+    <Circle x="40" y="1050" r="24" fillColor="#FF343434" />
+
+    <!-- A restrained set of mechanical spokes. -->
+    <Line x="40" y="480" x1="40" y1="585" strokeColor="#FF383838" weight="5" />
+    <Line x="-363" y="647" x1="-288" y1="722" strokeColor="#FF303030" weight="5" />
+    <Line x="-530" y="1050" x1="-425" y1="1050" strokeColor="#FF383838" weight="5" />
+    <Line x="-363" y="1453" x1="-288" y1="1378" strokeColor="#FF303030" weight="5" />
+    <Line x="40" y="1620" x1="40" y1="1515" strokeColor="#FF383838" weight="5" />
+    <Line x="443" y="1453" x1="368" y1="1378" strokeColor="#FF303030" weight="5" />
+    <Line x="610" y="1050" x1="505" y1="1050" strokeColor="#FF383838" weight="5" />
+    <Line x="443" y="647" x1="368" y1="722" strokeColor="#FF303030" weight="5" />
+
+    <!-- Inner gear rings. -->
+    <Circle x="40" y="1050" r="330" strokeColor="#FF303030" weight="4" />
+    <Circle x="40" y="1050" r="300" strokeColor="#FF1F1F1F" weight="2" />
+    <Circle x="40" y="1050" r="205" strokeColor="#FF303030" weight="3" />
+    <Circle x="40" y="1050" r="18" fillColor="#FF454545" />
+
+    <!-- Main time: gold hour digits and minute capsule. -->
+    <DateTime x="370" y="900" format="hh" size="220"
+        color="#FFC6A15B" bold="true" align="left" alignV="center" />
+    <Rectangle x="370" y="1050" w="300" h="132" cornerRadius="66"
+        fillColor="#FFC6A15B" />
+    <DateTime x="520" y="1116" format="mm" size="104"
+        color="#FF080808" bold="true" align="center" alignV="center" />
+
+    <!-- Date and weekday. -->
+    <DateTime x="370" y="1245" format="EEEE" size="38"
+        color="#FFB7B7B7" align="left" />
+    <DateTime x="370" y="1300" format="d MMMM yyyy" size="34"
+        color="#FF777777" align="left" />
+
+    <!-- Battery indicator: respects the system AOD battery toggle. -->
+    <Group x="370" y="1400" visibility="#battery_enable">
+        <Rectangle x="0" y="0" w="82" h="36" cornerRadius="8"
+            strokeColor="#FF777777" weight="3" />
+        <Rectangle x="84" y="10" w="8" h="16" cornerRadius="3"
+            fillColor="#FF777777" />
+        <Rectangle x="7" y="7" w="0.68*#battery_level" h="22"
+            cornerRadius="4" fillColor="#FFC6A15B" />
+        <Text x="112" y="20" size="30" color="#FFB7B7B7"
+            textExp="#battery_level+'%'" alignV="center" />
+    </Group>
+
+    <!-- Notification icons are supplied by the AOD system. -->
+    <Array count="3" indexName="_n" visibility="#notification_enable">
+        <Image x="370+#_n*92" y="1510" w="56" h="56"
+            align="center" alignV="center"
+            srcType="ApplicationIcon" srcExp="@notificationPackages[#_n]"
+            visibility="#_n<#notificationCount" />
+    </Array>
+</Aod>
