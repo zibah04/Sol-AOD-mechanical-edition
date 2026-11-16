@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='utf-8' standalone='yes' ?>
+<MIUI_Theme_Values>
+    <theme_type>maml_style</theme_type>
+    <support_lunar_calendar>0</support_lunar_calendar>
+    <support_battery>1</support_battery>
+    <support_notification>1</support_notification>
+    <lunar_calendar_enable>0</lunar_calendar_enable>
+    <battery_enable>1</battery_enable>
+    <notification_enable>1</notification_enable>
+</MIUI_Theme_Values>
